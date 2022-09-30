@@ -49,7 +49,11 @@ int main(){
 			sprintf(run, "./ssd R %d", idx);
 		}
 		else if(strcmp(cmd, "help") == 0){
-			printf("HELP\n");
+			printf("- To wirte data on SDD : write 'adress number' 'data value'  => ex) write 11 0x12345678\n");
+			printf("- To read data on SDD : read 'adress number'  =>ex) read 11 \n");
+			printf("- To wirte all of data on SDD : fullwrite 'data value'  => ex) fullwrite 0x12345678\n");
+			printf("- To read all of data on SDD : fullread\n");
+			printf("- To exit : exit\n");
 			continue;
 		}
 		else if(strcmp(cmd, "fullwrite") == 0){
