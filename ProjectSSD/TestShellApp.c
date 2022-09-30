@@ -34,7 +34,6 @@ int main(){
 		uint32_t value;
 		int flag = 1;
 
-		printf(">> ");
 		gets(str);
 
 		if(strcmp(str, "") == 0) continue;

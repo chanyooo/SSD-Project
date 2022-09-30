@@ -15,56 +15,57 @@ void full_read(){
 	fclose(fp);
 }
 
-int main(){
+void read_line(){
+	char res[50];
 
-	while(1){
-		char str[50];
+	FILE * fp = fopen("result.txt", "r");
+
+	printf("%s", fgets(res, sizeof(res), fp));
+	fclose(fp);
+}
+
+int main(int argc, char* argv[]){
 		char cmd[10];
+		strcpy(cmd, argv[1]);
 		char run[50];
 		int idx;
 		uint32_t value;
-		int flag = 1;
 
-		printf(">> ");
-		gets(str);
-
-		if(strcmp(str, "") == 0) continue;
-
-		sscanf(str, "%s %d %X", cmd, &idx, &value);
-
-		if(strcmp(cmd, "exit") == 0) break;
-		
 		if(strcmp(cmd, "write") == 0){
-			sprintf(run, "ssd W %d 0x%X", idx, value);	
+			idx = atoi(argv[2]);
+			value = strtol(argv[3], NULL, 16);
+			sprintf(run, "./ssd W %d 0x%X", idx, value);	
 		}
 		else if(strcmp(cmd, "read") == 0){
-			sprintf(run, "ssd R %d", idx);
+			idx = atoi(argv[2]);
+			sprintf(run, "./ssd R %d", idx);
 		}
 		else if(strcmp(cmd, "help") == 0){
 			printf("HELP\n");
-			continue;
+			return 0;
 		}
 		else if(strcmp(cmd, "fullwrite") == 0){
-			sscanf(str, "%s %X", cmd, &value);
+			value = strtol(argv[2], NULL, 16);
 			for(int i=0; i<100; i++){
-				sprintf(run, "ssd W %d 0x%X", i, value);
+				sprintf(run, "./ssd W %d 0x%X", i, value);
+				system(run);
 			}
+			return 0;
 		}
 		else if(strcmp(cmd, "fullread") == 0){
 			full_read();
-			continue;
+			return 0;
 		}
 		else{
 			printf("INVALID COMMAND\n");
-			continue;
+			return 0;
 		}
 		if(idx < 0 || idx > 99){
 			printf("INVALID COMMAND\n");
-			continue;
+			return 0;
 		}
-		printf(run);
-	}	
-
+		system(run);
+		if(strcmp(cmd, "read") == 0)read_line();
 
 	return 0;
 }

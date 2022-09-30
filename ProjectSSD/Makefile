@@ -9,7 +9,10 @@ app:
 clean:
 	rm $(RESULT)
 
-run:
-	./Test
-	fullread
-	exit
+TestApp1:
+	(echo fullwrite 0x12345; echo fullread;  echo exit) | ./Test 
+
+TestApp2:
+	(for((i=0; i<3; i++)) do\
+   	 echo read $i\
+	done; echo exit	) | ./Test
